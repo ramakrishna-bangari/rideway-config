@@ -6,11 +6,24 @@ spring:
     gateway:
       server:
         webmvc:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
-
+          routes:
+            - id: identity-service
+              uri: lb://identity-service
+              predicates:
+                - Path=/api/auth/**,/api/riders/**,/api/drivers/**,/api/admin/**
+            - id: ride-service
+              uri: lb://ride-service
+              predicates:
+                - Path=/api/rides/**,/api/fares/**
+            - id: dispatch-service
+              uri: lb://dispatch-service
+              predicates:
+                - Path=/api/dispatch/**
+            - id: notification-service
+              uri: lb://notification-service
+              predicates:
+                - Path=/api/notifications/**
+    
 eureka:
   client:
     service-url:
