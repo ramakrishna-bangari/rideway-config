@@ -69,10 +69,10 @@ app:
   services:
     ride:
       base-url: ${RIDE_SERVICE_URL:http://localhost:8082}
-      internal-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
+      internal-service-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
     identity:
       base-url: ${IDENTITY_SERVICE_URL:http://localhost:8084}
-      internal-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
+      internal-service-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
 
   security:
     jwt:
