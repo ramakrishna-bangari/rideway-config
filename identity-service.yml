@@ -46,7 +46,3 @@ rideway:
     secret: ${JWT_SECRET:Jr7qK2mV9xL4pN8wT5aB3cD6eF0gH1iJkLmNoPqRsTu=}
     access-token-minutes: ${JWT_ACCESS_TOKEN_MINUTES:15}
     refresh-token-days: ${JWT_REFRESH_TOKEN_DAYS:7}
-
-  admin:
-    email: ${ADMIN_EMAIL:ramakrishnabangari08@gmail.com}
-    password: ${ADMIN_PASSWORD:12345678}
