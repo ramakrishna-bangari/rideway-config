@@ -34,6 +34,8 @@ app:
   kafka:
     topics:
       ride-events: ride-events
+  security:
+    internal-service-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
 
 security:
   jwt:
