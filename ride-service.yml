@@ -38,7 +38,8 @@ eureka:
 
 app:
   kafka:
-    ride-events-topic: ride-events
+    topics:
+      ride-events: ride-events
 
 security:
   jwt:
