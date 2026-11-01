@@ -1,0 +1,85 @@
+
+server:
+  port: ${SERVER_PORT:8085}
+
+spring:
+  application:
+    name: dispatch-service
+
+  datasource:
+    url: "${DISPATCH_DB_URL:jdbc:postgresql://ep-noisy-dew-b5w39h2p-pooler.c-7.us-east-2.aws.neon.tech/dispatch-service?sslmode=require&channel_binding=require}"
+    username: ${DISPATCH_DB_USERNAME:neondb_owner}
+    password: ${DISPATCH_DB_PASSWORD:npg_5r4XxHIqJaWi}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  data:
+    redis:
+      url: ${DISPATCH_REDIS_URL:rediss://default:gQAAAAAAA6GvAAIgcDE4MGY0ZDkwMmRjYjU0N2VkODdhNzk4NzIxYjI3M2NkYw@desired-meerkat-237999.upstash.io:6379}
+      timeout: 5s
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: dispatch-service-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring.json.trusted.packages: "com.rideway.dispatch_service.dto.event"
+        spring.json.value.default.type: com.rideway.dispatch_service.dto.event.RideDomainEvent
+        spring.json.use.type.headers: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        spring.json.add.type.headers: false
+    listener:
+      ack-mode: record
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+app:
+  dispatch:
+    search-radius-km: 5
+    offer-timeout-seconds: 20
+    max-offers-per-ride: 5
+    timeout-scan-ms: 5000
+    location-freshness-seconds: 45
+    location-key: rideway:dispatch:drivers:locations
+
+  kafka:
+    topics:
+      ride-events: ride-events
+      notification-events: notification-events
+
+  services:
+    ride:
+      base-url: ${RIDE_SERVICE_URL:http://localhost:8082}
+      internal-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
+    identity:
+      base-url: ${IDENTITY_SERVICE_URL:http://localhost:8084}
+      internal-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
+
+  security:
+    jwt:
+      secret: ${JWT_SECRET:Jr7qK2mV9xL4pN8wT5aB3cD6eF0gH1iJkLmNoPqRsTu=}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
