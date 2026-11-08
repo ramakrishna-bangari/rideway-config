@@ -52,3 +52,9 @@ app:
     templateId: ${MSG91_TEMPLATE_ID:6a91adf9e301de55c80fb685}
     senderId: ${MSG91_SENDER_ID:RIDEWAY}
     expiryMinutes: 5
+  app:
+  cloudinary:
+    cloud-name: ${CLOUDINARY_CLOUD_NAME:dgcw59ahz}
+    api-key: ${CLOUDINARY_API_KEY:782982365665155}
+    api-secret: ${CLOUDINARY_API_SECRET:yFSoMXG1BBjNvdCkRAhBb92_vmE}
+    folder: ${CLOUDINARY_FOLDER:rideway-profiles}
