@@ -58,3 +58,7 @@ app:
     api-key: ${CLOUDINARY_API_KEY:782982365665155}
     api-secret: ${CLOUDINARY_API_SECRET:yFSoMXG1BBjNvdCkRAhBb92_vmE}
     folder: ${CLOUDINARY_FOLDER:rideway-profiles}
+  twofactor:
+    api-key: ${TWOFACTOR_API_KEY:6a91adf9e301de55c80fb68}
+    otp-template: ${TWOFACTOR_OTP_TEMPLATE:RIDEWAY_OTP}
+
