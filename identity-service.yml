@@ -48,17 +48,13 @@ rideway:
     refresh-token-days: ${JWT_REFRESH_TOKEN_DAYS:7}
 
 app:
-  msg91:
-    authKey: ${MSG91_AUTH_KEY:6a91adf9e301de55c80fb685}
-    templateId: ${MSG91_TEMPLATE_ID:6a91adf9e301de55c80fb685}
-    senderId: ${MSG91_SENDER_ID:RIDEWAY}
-    expiryMinutes: 5
   cloudinary:
     cloud-name: ${CLOUDINARY_CLOUD_NAME:dgcw59ahz}
     api-key: ${CLOUDINARY_API_KEY:782982365665155}
     api-secret: ${CLOUDINARY_API_SECRET:yFSoMXG1BBjNvdCkRAhBb92_vmE}
     folder: ${CLOUDINARY_FOLDER:rideway-profiles}
-  twofactor:
-    api-key: ${TWOFACTOR_API_KEY:6a91adf9e301de55c80fb68}
-    otp-template: ${TWOFACTOR_OTP_TEMPLATE:RIDEWAY_OTP}
+
+twofactor:
+  api-key: ${TWOFACTOR_API_KEY:20b3710c-a36f-11f1-9cb1-0200cd936042}
+  otp-template: ${TWOFACTOR_OTP_TEMPLATE:RIDEWAY_OTP_VERIFICATION}
 
