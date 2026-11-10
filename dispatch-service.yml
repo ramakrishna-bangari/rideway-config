@@ -26,7 +26,13 @@ spring:
       timeout: 5s
 
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka-rideway-ramakrishnabangari08-ec41.d.aivencloud.com:12097}
+    properties:
+      security.protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
+      sasl.mechanism: ${KAFKA_SASL_MECHANISM:SCRAM-SHA-256}
+      sasl.jaas.config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="${KAFKA_USERNAME:avnadmin}" password="${KAFKA_PASSWORD:AVNS_W7ymIBYCqcMxjvplAz3}";'
+      ssl.endpoint.identification.algorithm: https
+
     consumer:
       group-id: dispatch-service-group
       auto-offset-reset: earliest
@@ -37,11 +43,13 @@ spring:
         spring.json.trusted.packages: "com.rideway.dispatch_service.dto.event"
         spring.json.value.default.type: com.rideway.dispatch_service.dto.event.RideDomainEvent
         spring.json.use.type.headers: false
+
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
         spring.json.add.type.headers: false
+
     listener:
       ack-mode: record
 
