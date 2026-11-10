@@ -1,14 +1,14 @@
 server:
-  port: ${SERVER_PORT:8082}
+  port: ${SERVER_PORT:8087}
 
 spring:
   application:
-    name: ride-service
+    name: payment-service
 
   datasource:
-    url: "${RIDE_DB_URL:jdbc:postgresql://ep-noisy-dew-b5w39h2p-pooler.c-7.us-east-2.aws.neon.tech/ride-service?sslmode=require&channel_binding=require}"
-    username: ${RIDE_DB_USERNAME:neondb_owner}
-    password: ${RIDE_DB_PASSWORD:npg_5r4XxHIqJaWi}
+    url: "${PAYMENT_DB_URL:jdbc:postgresql://ep-noisy-dew-b5w39h2p-pooler.c-7.us-east-2.aws.neon.tech/ride-service?sslmode=require&channel_binding=require}"
+    username: ${PAYMENT_DB_USERNAME:neondb_owner}
+    password: ${PAYMENT_DB_PASSWORD:npg_5r4XxHIqJaWi}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -17,51 +17,27 @@ spring:
     show-sql: ${JPA_SHOW_SQL:false}
     open-in-view: false
 
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka-rideway-ramakrishnabangari08-ec41.d.aivencloud.com:12097}
-    properties:
-      security.protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
-      sasl.mechanism: ${KAFKA_SASL_MECHANISM:SCRAM-SHA-256}
-      sasl.jaas.config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="avnadmin" password="AVNS_W7ymIBYCqcMxjvplAz3";'
-      ssl.endpoint.identification.algorithm: https
-
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
-
   instance:
     prefer-ip-address: true
 
+razorpay:
+  key-id: ${RAZORPAY_KEY_ID:rzp_test_TyPaTrBKQGqRKg}
+  key-secret: ${RAZORPAY_KEY_SECRET:A8MTsNd6xYITZsXAmbbnuMDy}
+  webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:rideway_webhook_secret_2026}
+
 app:
-  kafka:
-    topics:
-      ride-events: ride-events
+  services:
+    ride-service-url: ${RIDE_SERVICE_URL:http://ride-service:8082}
   security:
     internal-service-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
 
-security:
-  jwt:
-    secret: ${JWT_SECRET:Jr7qK2mV9xL4pN8wT5aB3cD6eF0gH1iJkLmNoPqRsTu=}
-
-rideway:
-  routing:
-    osrm-base-url: ${OSRM_BASE_URL:https://router.project-osrm.org}
-
-  fare:
-    rate-per-km: ${RIDEWAY_RATE_PER_KM:15}
-
 management:
-  tracing:
-    sampling:
-      probability: ${TRACING_SAMPLING_PROBABILITY:1.0}
-
-  zipkin:
-    tracing:
-      endpoint: ${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
-
   endpoints:
     web:
       exposure:
