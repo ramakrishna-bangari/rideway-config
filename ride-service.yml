@@ -18,7 +18,12 @@ spring:
     open-in-view: false
 
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka-rideway-ramakrishnabangari08-ec41.d.aivencloud.com:12097}
+    properties:
+      security.protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
+      sasl.mechanism: ${KAFKA_SASL_MECHANISM:SCRAM-SHA-256}
+      sasl.jaas.config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="avnadmin" password="AVNS_W7ymIBYCqcMxjvplAz3";'
+      ssl.endpoint.identification.algorithm: https
 
 eureka:
   client:
