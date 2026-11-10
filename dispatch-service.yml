@@ -1,4 +1,3 @@
-
 server:
   port: ${SERVER_PORT:8089}
 
@@ -57,6 +56,8 @@ spring:
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
   instance:
@@ -76,13 +77,16 @@ app:
       ride-events: ride-events
       notification-events: notification-events
 
+  # PURE SERVICE NAMES (Resolved dynamically via Eureka)
   services:
     ride:
-      base-url: ${RIDE_SERVICE_URL:http://localhost:8082}
+      base-url: ${RIDE_SERVICE_URL:http://ride-service}
       internal-service-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
     identity:
-      base-url: ${IDENTITY_SERVICE_URL:http://localhost:8084}
+      base-url: ${IDENTITY_SERVICE_URL:http://identity-service}
       internal-service-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
+    notification:
+      base-url: ${NOTIFICATION_SERVICE_URL:http://notification-service}
 
   security:
     jwt:
