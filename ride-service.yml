@@ -22,8 +22,10 @@ spring:
     properties:
       security.protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
       sasl.mechanism: ${KAFKA_SASL_MECHANISM:SCRAM-SHA-256}
-      sasl.jaas.config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="avnadmin" password="AVNS_W7ymIBYCqcMxjvplAz3";'
+      sasl.jaas.config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="${KAFKA_USERNAME:avnadmin}" password="${KAFKA_PASSWORD:AVNS_W7ymIBYCqcMxjvplAz3}";'
       ssl.endpoint.identification.algorithm: https
+      ssl.truststore.type: ${KAFKA_SSL_TRUSTSTORE_TYPE:PEM}
+      ssl.truststore.location: ${KAFKA_SSL_TRUSTSTORE_LOCATION:C:/spring-project/ca.pem}
 
 eureka:
   client:
