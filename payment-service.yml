@@ -2,8 +2,11 @@ server:
   port: ${SERVER_PORT:8087}
 
 spring:
+  application:
+    name: payment-service
+
   datasource:
-    url: "${PAYMENT_DB_URL:jdbc:postgresql://ep-noisy-dew-b5w39h2p-pooler.c-7.us-east-2.aws.neon.tech/payment-service?sslmode=require&channel_binding=require}"
+    url: "${PAYMENT_DB_URL:jdbc:postgresql://ep-noisy-dew-b5w39h2p-pooler.c-7.us-east-2.aws.neon.tech/ride-service?sslmode=require&channel_binding=require}"
     username: ${PAYMENT_DB_USERNAME:neondb_owner}
     password: ${PAYMENT_DB_PASSWORD:npg_5r4XxHIqJaWi}
     driver-class-name: org.postgresql.Driver
@@ -27,6 +30,12 @@ razorpay:
   key-id: ${RAZORPAY_KEY_ID:rzp_test_TyPaTrBKQGqRKg}
   key-secret: ${RAZORPAY_KEY_SECRET:A8MTsNd6xYITZsXAmbbnuMDy}
   webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:rideway_webhook_secret_2026}
+
+app:
+  services:
+    ride-service-url: ${RIDE_SERVICE_URL:http://ride-service:8082}
+  security:
+    internal-service-token: ${INTERNAL_SERVICE_TOKEN:Rideway_Internal_2026_A9fK7mQ2xP8vN4zT6wR3cL5hJ1sB0dE}
 
 management:
   endpoints:
