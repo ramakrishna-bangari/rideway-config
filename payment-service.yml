@@ -1,0 +1,44 @@
+server:
+  port: ${SERVER_PORT:8087}
+
+spring:
+  application:
+    name: payment-service
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:${PAYMENT_DB_URL}}
+    username: ${SPRING_DATASOURCE_USERNAME:${PAYMENT_DB_USERNAME}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${PAYMENT_DB_PASSWORD}}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${JPA_SHOW_SQL:false}
+    open-in-view: false
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+razorpay:
+  key-id: ${RAZORPAY_KEY_ID}
+  key-secret: ${RAZORPAY_KEY_SECRET}
+  webhook-secret: ${RAZORPAY_WEBHOOK_SECRET}
+
+app:
+  services:
+    ride-service-url: ${RIDE_SERVICE_URL:http://ride-service:8082}
+  security:
+    internal-service-token: ${INTERNAL_SERVICE_TOKEN}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
