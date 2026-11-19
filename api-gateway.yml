@@ -1,0 +1,54 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: identity-service
+              uri: ${IDENTITY_SERVICE_URL:https://rideway-identity.onrender.com}
+              predicates:
+                - Path=/api/auth/**,/api/admin/**,/api/drivers/**,/api/riders/**,/api/identity/**,/api/users/**
+
+            - id: ride-service
+              uri: ${RIDE_SERVICE_URL:https://rideway-ride.onrender.com}
+              predicates:
+                - Path=/api/rides/**,/api/fares/**
+
+            - id: payment-service
+              uri: ${PAYMENT_SERVICE_URL:https://rideway-payment.onrender.com}
+              predicates:
+                - Path=/api/payments/**
+
+            - id: dispatch-service
+              uri: ${DISPATCH_SERVICE_URL:https://rideway-dispatch.onrender.com}
+              predicates:
+                - Path=/api/dispatch/**
+
+            - id: notification-service
+              uri: ${NOTIFICATION_SERVICE_URL:https://rideway-notification.onrender.com}
+              predicates:
+                - Path=/api/notifications/**,/ws-notifications/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_URL:https://rideway-eureka.onrender.com/eureka/}
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
