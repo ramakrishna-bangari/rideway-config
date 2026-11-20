@@ -1,20 +1,20 @@
 server:
-  port: ${SERVER_PORT:8082}
+  port: ${PORT:${SERVER_PORT:8082}}
 
 spring:
   application:
     name: ride-service
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:${RIDE_DB_URL}}
-    username: ${SPRING_DATASOURCE_USERNAME:${RIDE_DB_USERNAME}}
-    password: ${SPRING_DATASOURCE_PASSWORD:${RIDE_DB_PASSWORD}}
+    url: ${RIDE_DB_URL}
+    username: ${RIDE_DB_USERNAME}
+    password: ${RIDE_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
-    show-sql: ${JPA_SHOW_SQL:false}
+    show-sql: false
     open-in-view: false
 
   kafka:
@@ -47,7 +47,7 @@ app:
       ride-events: ${RIDE_EVENTS_TOPIC:ride-events}
   services:
     dispatch:
-      base-url: ${DISPATCH_SERVICE_URL:http://dispatch-service}
+      base-url: ${DISPATCH_SERVICE_URL:http://localhost:8089}
   security:
     internal-service-token: ${INTERNAL_SERVICE_TOKEN}
 
@@ -66,3 +66,6 @@ management:
     web:
       exposure:
         include: health,info
+  endpoint:
+    health:
+      show-details: always
