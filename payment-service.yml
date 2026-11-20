@@ -1,20 +1,20 @@
 server:
-  port: ${SERVER_PORT:8087}
+  port: ${PORT:${SERVER_PORT:8085}}
 
 spring:
   application:
     name: payment-service
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:${PAYMENT_DB_URL}}
-    username: ${SPRING_DATASOURCE_USERNAME:${PAYMENT_DB_USERNAME}}
-    password: ${SPRING_DATASOURCE_PASSWORD:${PAYMENT_DB_PASSWORD}}
+    url: ${PAYMENT_DB_URL}
+    username: ${PAYMENT_DB_USERNAME}
+    password: ${PAYMENT_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
-    show-sql: ${JPA_SHOW_SQL:false}
+    show-sql: false
     open-in-view: false
 
 eureka:
@@ -33,7 +33,7 @@ razorpay:
 
 app:
   services:
-    ride-service-url: ${RIDE_SERVICE_URL:http://ride-service:8082}
+    ride-service-url: ${RIDE_SERVICE_URL:http://localhost:8082}
   security:
     internal-service-token: ${INTERNAL_SERVICE_TOKEN}
 
@@ -42,3 +42,6 @@ management:
     web:
       exposure:
         include: health,info
+  endpoint:
+    health:
+      show-details: always
