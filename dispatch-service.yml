@@ -1,23 +1,20 @@
 server:
-  port: ${SERVER_PORT:8089}
+  port: ${PORT:${SERVER_PORT:8089}}
 
 spring:
   application:
     name: dispatch-service
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:${DISPATCH_DB_URL}}
-    username: ${SPRING_DATASOURCE_USERNAME:${DISPATCH_DB_USERNAME}}
-    password: ${SPRING_DATASOURCE_PASSWORD:${DISPATCH_DB_PASSWORD}}
+    url: ${DISPATCH_DB_URL}
+    username: ${DISPATCH_DB_USERNAME}
+    password: ${DISPATCH_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
     open-in-view: false
-    properties:
-      hibernate:
-        format_sql: false
 
   data:
     redis:
@@ -33,7 +30,6 @@ spring:
       ssl.endpoint.identification.algorithm: https
       ssl.truststore.type: ${KAFKA_SSL_TRUSTSTORE_TYPE:PEM}
       ssl.truststore.location: ${KAFKA_SSL_TRUSTSTORE_LOCATION:/etc/secrets/ca.pem}
-
     consumer:
       group-id: dispatch-service-group
       auto-offset-reset: earliest
@@ -44,13 +40,11 @@ spring:
         spring.json.trusted.packages: "com.rideway.dispatch_service.dto.event"
         spring.json.value.default.type: com.rideway.dispatch_service.dto.event.RideDomainEvent
         spring.json.use.type.headers: false
-
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
         spring.json.add.type.headers: false
-
     listener:
       ack-mode: record
 
@@ -71,28 +65,29 @@ app:
     timeout-scan-ms: 5000
     location-freshness-seconds: 45
     location-key: rideway:dispatch:drivers:locations
-
   kafka:
     topics:
       ride-events: ride-events
       notification-events: notification-events
-
   services:
     ride:
-      base-url: ${RIDE_SERVICE_URL:http://ride-service}
+      base-url: ${RIDE_SERVICE_URL:http://localhost:8082}
       internal-service-token: ${INTERNAL_SERVICE_TOKEN}
     identity:
-      base-url: ${IDENTITY_SERVICE_URL:http://identity-service}
+      base-url: ${IDENTITY_SERVICE_URL:http://localhost:8084}
       internal-service-token: ${INTERNAL_SERVICE_TOKEN}
     notification:
-      base-url: ${NOTIFICATION_SERVICE_URL:http://notification-service}
+      base-url: ${NOTIFICATION_SERVICE_URL:http://localhost:8083}
 
-  security:
-    jwt:
-      secret: ${JWT_SECRET}
+security:
+  jwt:
+    secret: ${JWT_SECRET}
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info
+  endpoint:
+    health:
+      show-details: always
