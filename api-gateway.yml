@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${PORT:${SERVER_PORT:8080}}
 
 spring:
   application:
@@ -11,27 +11,27 @@ spring:
         webmvc:
           routes:
             - id: identity-service
-              uri: ${IDENTITY_SERVICE_URL:https://rideway-identity.onrender.com}
+              uri: ${IDENTITY_SERVICE_URL:http://localhost:8084}
               predicates:
                 - Path=/api/auth/**,/api/admin/**,/api/drivers/**,/api/riders/**,/api/identity/**,/api/users/**
 
             - id: ride-service
-              uri: ${RIDE_SERVICE_URL:https://rideway-ride.onrender.com}
+              uri: ${RIDE_SERVICE_URL:http://localhost:8082}
               predicates:
                 - Path=/api/rides/**,/api/fares/**
 
             - id: payment-service
-              uri: ${PAYMENT_SERVICE_URL:https://rideway-payment.onrender.com}
+              uri: ${PAYMENT_SERVICE_URL:http://localhost:8085}
               predicates:
                 - Path=/api/payments/**
 
             - id: dispatch-service
-              uri: ${DISPATCH_SERVICE_URL:https://rideway-dispatch.onrender.com}
+              uri: ${DISPATCH_SERVICE_URL:http://localhost:8089}
               predicates:
                 - Path=/api/dispatch/**
 
             - id: notification-service
-              uri: ${NOTIFICATION_SERVICE_URL:https://rideway-notification.onrender.com}
+              uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8083}
               predicates:
                 - Path=/api/notifications/**,/ws-notifications/**
 
@@ -40,7 +40,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_SERVER_URL:https://rideway-eureka.onrender.com/eureka/}
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761/eureka/}
   instance:
     prefer-ip-address: true
 
